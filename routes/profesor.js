@@ -3,8 +3,8 @@ const router = Router();
 const passport = require('passport');
 
 router.get('/secret-profesor', (req, res) => {
-    const mensaje ="";
-    req.isAuthenticated() ? mensaje ="Profesor NO autenticado" : mensaje = "Profesor NO autenticado";
+    let mensaje ="";
+    req.isAuthenticated() ? mensaje ="Profesor autenticado" : mensaje = "Profesor NO autenticado";
     res.json({ respuesta: mensaje });
 });
 
