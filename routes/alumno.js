@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const alumnoController = require('../controllers/alumno.controller');
 
 //facebook login
 router.get('/login/facebook',
@@ -12,6 +13,7 @@ router.get('/return', passport.authenticate('facebook', { failureRedirect: '/log
     //esto deberia enviar a un dashboard o yo que se cuando ya esta logeado
     res.json({ mensaje: 'el usuario fue autentificado con exito por fb puede ver sus datos en la ruta profile' });
   });
+
 
 router.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
@@ -76,5 +78,12 @@ router.get('/logout-alumno', (req, res) => {
   req.logOut();
   res.json({ respuesta: 'Alumno ha cerrado sesion' });
 });
+
+
+router.get('/alumno/obtenerAlumnos',alumnoController.buscarTodo);
+router.get('/alumno/:username',alumnoController.buscarPorUsername);
+router.put('/alumno/actualizar/:id',alumnoController.actualizar);
+router.delete('/alumno/eliminar/:id',alumnoController.eliminar);
+
 
 module.exports = router;
