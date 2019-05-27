@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const AlumnoSchema = new Schema({
-
+  
   username: { type: String, required: true },
   password: { type: String },
   firstname: { type: String },
@@ -10,7 +10,8 @@ const AlumnoSchema = new Schema({
   email: { type: String },
   facebookId: { type: String },
   ingresado: { type: Date, default: Date.now() },
-  isVerified: { type: Boolean, default: false, required: true }
+  isVerified: { type: Boolean, default: false, required: true },
+  createdAt:{type: Date}
 });
 
 AlumnoSchema.methods.encryptPassword = async (password) => {
