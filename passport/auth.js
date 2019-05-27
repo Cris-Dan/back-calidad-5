@@ -1,17 +1,17 @@
 var passport = require('passport');
-var Strategy = require('passport-facebook').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const Alumno = require('../models/Alumno');
 const Profesor = require('../models/Profesor');
 const emailer = require('./email-confirmation/emailer');
 
-passport.serializeUser(function (user, cb) {
-    //Alumno.findOrCreate({ facebookId: profile.id });
-    cb(null, user);
+passport.serializeUser(function (alumno, cb) {
+    cb(null, alumno);
 });
 
-passport.deserializeUser(function (obj, cb) {
-    cb(null, obj);
+passport.deserializeUser(function (alumno, cb) {
+    // const alumno = await Alumno.find(alumno);
+    cb(null, alumno);
 });
 
 
@@ -25,14 +25,23 @@ passport.deserializeUser(async (_id, done) => {
 });*/
 
 //facebook
-passport.use(new Strategy({
+passport.use(new FacebookStrategy({
     clientID: process.env['FACEBOOK_CLIENT_ID'],
     clientSecret: process.env['FACEBOOK_CLIENT_SECRET'],
     callbackURL: '/return'
-},
-    function (accessToken, refreshToken, profile, cb) {
-        return cb(null, profile);
-    }));
+}, async (accessToken, refreshToken, profile, done) => {
+
+    let alumno = await Alumno.findOne({ facebookId: profile.id });
+    if (!alumno) {
+        alumno = new Alumno();
+        alumno.facebookId = profile.id;
+        alumno.username = profile.displayName;
+        alumno.isVerified = true;
+        console.log(alumno);
+        await alumno.save();
+    }
+    return done(null, alumno);
+}));
 
 
 //local

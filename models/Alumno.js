@@ -4,13 +4,13 @@ const bcrypt = require('bcryptjs');
 const AlumnoSchema = new Schema({
 
   username: { type: String, required: true },
-  password: { type: String, required: true },
+  password: { type: String },
   firstname: { type: String },
   lastname: { type: String },
-  email: { type: String,required:true},
-  facebookId:{type: String},
+  email: { type: String },
+  facebookId: { type: String },
   ingresado: { type: Date, default: Date.now() },
-  isVerified:{ type:Boolean, default: false,required:true}
+  isVerified: { type: Boolean, default: false, required: true }
 });
 
 AlumnoSchema.methods.encryptPassword = async (password) => {
