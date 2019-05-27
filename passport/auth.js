@@ -10,7 +10,6 @@ passport.serializeUser(function (alumno, cb) {
 });
 
 passport.deserializeUser(function (alumno, cb) {
-    // const alumno = await Alumno.find(alumno);
     cb(null, alumno);
 });
 

@@ -25,7 +25,7 @@ app.use(connectFlash());
 
 //routes.
 app.use(require('./routes/alumno'));
-
+app.use(require('./routes/profesor'));
 //iniciar
 app.listen(app.get('port'), () => {
     console.log("servidor en puerto: " + app.get('port'));
