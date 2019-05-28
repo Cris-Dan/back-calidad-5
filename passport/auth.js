@@ -68,6 +68,8 @@ passport.use('local-register-alumno', new LocalStrategy({
     alumno.firstname = req.body.firstname;
     alumno.lastname = req.body.lastname;
     alumno.email = req.body.email;
+    alumno.genero = req.body.genero;
+    alumno.edad = req.body.edad;
     await alumno.save();
 
     emailer(alumno, req);
@@ -120,6 +122,8 @@ passport.use('local-register-profesor', new LocalStrategy({
     profesor.firstname = req.body.firstname;
     profesor.lastname = req.body.lastname;
     profesor.email = req.body.email;
+    profesor.genero= req.body.genero;
+    profesor.edad=req.body.edad;
     await profesor.save();
 
     return done(null, profesor);

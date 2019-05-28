@@ -14,6 +14,8 @@ const ProfesorSchema = new Schema({
   vecesDictado: { type: Number, default: 0 },
   calificacion: { type: Number },
   email: { type: String, required: true },
+  genero:{type:String},
+  edad:{type:Number},
   ingresado: { type: Date, default: Date.now() },
   isVerified:{ type:Boolean,default:false}
 });
