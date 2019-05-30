@@ -17,7 +17,7 @@ var app = express();
 require('./database');
 require('./passport/auth');
 //configs
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 4000);
 
 //middlewares
 app.use(morgan('dev'));
@@ -29,7 +29,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 app.use(connectFlash());
-
+ 
 //routes.
 app.use('/api',require('./routes/alumno'));
 app.use('/api',require('./routes/profesor'));

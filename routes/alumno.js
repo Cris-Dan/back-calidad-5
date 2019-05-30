@@ -57,22 +57,19 @@ router.get('/confirmation/:token', async (req, res) => {
   }
 });
 
-router.post('/login-alumno', passport.authenticate('local-login-alumno', { failureRedirect: "/errorLogin" }), (req, res) => {
-  if (req.user) {
-    console.log(req.user);
-    res.json({ message: 'Alumno ha iniciado sesion' });
-  }
-  else {
-    console.log(req.flash("error"));
-    res.json({ message: 'Fallo en autenticacion' });
+router.post('/login-alumno',passport.authenticate('local-login-alumno',{failureRedirect:'/api/failureLogin'}), (req, res,next) => {
+  if(req.user)
+  {
+    return res.status(200).send({message:'Login Satisfactorio'});
   }
 });
 
 /*Amiguitos intenten hacer que las apis devuelvan un mensaje */
 /**cuando el login o el registro de alumnos estén erroneos */
 /**Ejemplos: mensaje:"Error Login" o algo así XD */
-router.get('/errorLogin', (req, res, next) => {
-  res.json({ message: 'Error Login' });
+router.get('/failureLogin',(req,res)=>
+{
+    res.status(401).send({message:'Error Login'});
 });
 router.get('/logout-alumno', (req, res) => {
   req.logOut();
