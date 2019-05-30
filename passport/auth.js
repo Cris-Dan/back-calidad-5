@@ -5,12 +5,14 @@ const Alumno = require('../models/Alumno');
 const Profesor = require('../models/Profesor');
 const emailer = require('./email-confirmation/emailer');
 
-passport.serializeUser(function (alumno, cb) {
-    cb(null, alumno);
+const bcrypt = require('bcrypt');
+
+passport.serializeUser(function (user, cb) {
+    cb(null, user);
 });
 
-passport.deserializeUser(function (alumno, cb) {
-    cb(null, alumno);
+passport.deserializeUser(function (user, cb) {
+    cb(null, user);
 });
 
 
@@ -87,8 +89,12 @@ passport.use('local-login-alumno', new LocalStrategy({
     if (!alumno) {
         return done(null, false, { message: "Correo Incorrecto" });
     }
+   
+    //Variable smaaaaaaaaaash porque no funciona la cojudez sin exportar
+    const smaaaaaaaaaash = await bcrypt.compare(password,alumno.password);
+
     //Verifica el password del alumno
-    if (!alumno.comparePassword(password, alumno.password)) {
+    if (!smaaaaaaaaaash) {       
         return done(null, false, { message: "Password Incorrecto" });
     }//Corrobora la comprobacion del email
     if (alumno.isVerified != true) {
@@ -106,7 +112,7 @@ passport.use('local-register-profesor', new LocalStrategy({
 
     const { email } = req.body;
     const repetido = await Profesor.findOne({ username: username });
-
+    
     if (repetido) {
         return done(null, false);
     }

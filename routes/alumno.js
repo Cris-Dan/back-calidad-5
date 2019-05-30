@@ -60,6 +60,7 @@ router.get('/confirmation/:token', async (req, res) => {
 router.post('/login-alumno',passport.authenticate('local-login-alumno',{failureRedirect:'/api/failureLogin'}), (req, res,next) => {
   if(req.user)
   {
+    console.log(req.user);
     return res.status(200).send({message:'Login Satisfactorio'});
   }
 });
