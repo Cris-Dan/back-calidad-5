@@ -34,6 +34,7 @@ app.use(connectFlash());
 app.use('/api',require('./routes/alumno'));
 app.use('/api',require('./routes/profesor'));
 app.use('/api',require('./routes/curso'));
+app.use('/api',require('./routes/logic'));
 //iniciar
 app.listen(app.get('port'), () => {
     console.log("servidor en puerto: " + app.get('port'));

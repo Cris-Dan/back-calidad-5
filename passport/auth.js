@@ -105,47 +105,49 @@ passport.use('local-login-alumno', new LocalStrategy({
 }));
 
 passport.use('local-register-profesor', new LocalStrategy({
-    usernameField: 'username',
+    usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
-}, async (req, username, password, done) => {
+}, async (req, email, password, done) => {
 
-    const { email } = req.body;
-    const repetido = await Profesor.findOne({ username: username });
     
-    if (repetido) {
-        return done(null, false);
-    }
-
     const emailRepetido = await Profesor.findOne({ email });
+    
     if (emailRepetido) {
         return done(null, false);
     }
-
+    const {username}  =req.body;
+    const usuarioRepetido = await Profesor.findOne({ username });
+    if (usuarioRepetido) {
+        return done(null, false);
+    }
     const profesor = new Profesor();
-    profesor.username = username;
+    profesor.email = email;
     profesor.password = await profesor.encryptPassword(password);
     profesor.firstname = req.body.firstname;
     profesor.lastname = req.body.lastname;
-    profesor.email = req.body.email;
+    profesor.username = req.body.username;
     profesor.genero= req.body.genero;
     profesor.edad=req.body.edad;
     await profesor.save();
-
+    
     return done(null, profesor);
 
 }));
 
 passport.use('local-login-profesor', new LocalStrategy({
-    usernameField: 'username',
+    usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
-}, async (req, username, password, done) => {
-    const profesor = await Profesor.findOne({ username: username });
+}, async (req, email, password, done) => {
+    const profesor = await Profesor.findOne({ email });
     if (!profesor) {
         return done(null, false, { message: 'Profesor no encontrado.' });
     }
-    if (!profesor.comparePassword(password, profesor.password)) {
+
+    //Verificando el encryptado del password con bcrypt
+    const smaaaaaaaaaash = await bcrypt.compare(password,profesor.password);
+    if (!smaaaaaaaaaash) {
         return done(null, false, { message: 'Incorrect password.' });
     }
     return done(null, profesor);

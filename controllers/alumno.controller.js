@@ -47,7 +47,8 @@ module.exports = {
                 alumno.firstname = req.body.firstname;
                 alumno.lastname = req.body.lastname;
                 alumno.email = req.body.email;
-
+                alumno.edad= req.body.edad;
+                alumno.genero = req.body.genero;
                 Alumno.findOneAndUpdate({_id: alumnoExiste._id}, alumno, {new: true}).then((alumno) => {
                     res.send({message: 'se actualizo con exito.', alumno});
                 }).catch((err) => {

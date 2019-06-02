@@ -4,6 +4,9 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const alumnoController = require('../controllers/alumno.controller');
 
+
+const Alumno = require('../models/Alumno');
+
 //facebook login
 router.get('/login/facebook',
   passport.authenticate('facebook'));
@@ -15,19 +18,18 @@ router.get('/return', passport.authenticate('facebook', { failureRedirect: '/log
   });
 
 
-router.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
+router.get('/profile',require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
     //Esto se utiliza para verificar los datos del logeado 
 
-    res.json(req.user);
+    res.status(200).json(req.user);
   });
 
 //local login
 router.get('/secret-alumno', (req, res) => {
   let mensaje = "";
   req.isAuthenticated() ? mensaje = "Alumno autenticado" : mensaje = "Alumno NO autenticado";
-  res.json({ respuesta: mensaje });
+  res.status(200).json({ respuesta: mensaje });
 });
 
 router.post('/register-alumno', passport.authenticate('local-register-alumno', { failureFlash: true }), (req, res) => {

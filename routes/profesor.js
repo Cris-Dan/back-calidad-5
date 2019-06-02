@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const passport = require('passport');
+const controller = require('../controllers/profesor.controller');
 
 router.get('/secret-profesor', (req, res) => {
     let mensaje ="";
@@ -12,7 +13,7 @@ router.post('/register-profesor', passport.authenticate('local-register-profesor
     res.json({ respuesta: 'Profesor registrado' });
 });
 
-router.post('/login-profesor', passport.authenticate('local-login-profesor'), (req, res) => {
+router.post('/login-profesor', passport.authenticate('local-login-profesor',{failureRedirect:'/api/errorLogin'}), (req, res) => {
     res.json({ respuesta: 'Profesor ha iniciado sesion' });
 });
 
@@ -20,5 +21,18 @@ router.get('/logout-profesor', (req, res) => {
     req.logout();
     res.json({ respuesta: 'Profesor ha cerrado sesion' });
 });
+
+router.get('/errorLogin',(req,res,next)=>
+{
+    res.status(400).send({message:'Jhonys'});
+});
+
+
+
+router.get('/profesor/buscarTodo',controller.actualizarProfesor);
+router.get('/profesor/buscar/:email',controller.buscarProfesor);
+router.put('/profesor/actualizar/:id',controller.actualizarProfesor);
+router.delete('/profesor/eliminar/:email',controller.eliminarProfesor);
+
 
 module.exports = router;
