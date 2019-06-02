@@ -7,7 +7,7 @@ exports.crearCurso = async (req,res)=>
     const curso = await Curso.findOne({nombre});
     if(curso)
     {
-        res.status(400).send({Error:'Curso Existente'}); 
+        res.status(400).send({Error:'Curso Existente'});
     }else{
         const newCurso = new Curso({});
         newCurso.nombre=req.body.nombre;
@@ -22,10 +22,10 @@ exports.actualizarCurso = async(req,res)=>
 
     const {nombre} = req.params;
 
-    if(req.body.nombre || req.body.marco)
-        res.status(401).send({message:'Error de validacion'});
+    if(!req.body.nombre || !req.body.marco)
+        return res.status(401).send({message:'Error de validacion'});
 
-    
+
 
     Curso.findOneAndUpdate({nombre}, {
         nombre:req.body.nombre,
@@ -33,13 +33,13 @@ exports.actualizarCurso = async(req,res)=>
     }, {new: true})
     .then(curso => {
         if(!curso) {
-            res.status(404).send({
+         return res.status(404).send({
                 message: "No se encontro curso con " + nombre
             });
         }
-        res.send(note);
+        return res.send(curso);
     }).catch(err => {
-        res.status(500).send({
+        return res.status(500).send({
             message: "Error de actualizacion con el curso " + nombre
         });
     });
@@ -48,9 +48,9 @@ exports.buscarTodo = async(req,res)=>
 {
     Curso.find()
     .then(cursos => {
-        res.status(200).send(cursos);
+        return res.status(200).send(cursos);
     }).catch(err => {
-        res.status(500).send({
+        return res.status(500).send({
             message: err.message || "Error de Servidor"
         });
     });
@@ -67,17 +67,17 @@ exports.buscarCurso = async(req,res)=>
 }
 exports.eliminarCurso = async(req,res)=>
 {
-    const {nombre} = req.body;
+    const {nombre} = req.params;
     Curso.findOneAndDelete({nombre})
     .then(curso => {
         if(!curso) {
-             res.status(404).send({
+             return res.status(404).send({
                 message: "No se encontro curso con nombre " + nombre
             });
         }
-        res.status(200).send({message: "Curso eliminado"});
+        return res.status(200).send({message: "Curso eliminado"});
     }).catch(err => {
-         res.status(404).send({
+         return res.status(404).send({
             message: "No se encontro curso con nombre " + nombre
             });
     });

@@ -2,16 +2,19 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const AlumnoSchema = new Schema({
-  
+
   username: { type: String, required: true },
   password: { type: String },
   firstname: { type: String },
   lastname: { type: String },
   email: { type: String },
+  genero:{type:String},
+  edad:{type:Number},
   facebookId: { type: String },
   ingresado: { type: Date, default: Date.now() },
   isVerified: { type: Boolean, default: false, required: true },
-  createdAt:{type: Date}
+  createdAt:{type: Date, default:Date.now},
+  updateAt:{type:Date}
 });
 
 AlumnoSchema.methods.encryptPassword = async (password) => {
