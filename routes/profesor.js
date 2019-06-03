@@ -24,7 +24,7 @@ router.get('/logout-profesor', (req, res) => {
 
 router.get('/errorLogin',(req,res,next)=>
 {
-    res.status(400).send({message:'Jhonys'});
+    res.status(201).send({message:'Malos credenciales'});
 });
 
 
