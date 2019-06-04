@@ -5,15 +5,17 @@ var passport = require('passport');
 var morgan = require('morgan');
 var cookierParser = require('cookie-parser');
 var expressSession = require('express-session');
-
+const socketIO = require('socket.io');
+const http = require('http');
 const cors = require('cors');
 
 const connectFlash = require('connect-flash');
 
-
-
 // Create a new Express application.
 var app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
+
 require('./database');
 require('./passport/auth');
 //configs
@@ -29,13 +31,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 app.use(connectFlash());
- 
+
 //routes.
-app.use('/api',require('./routes/alumno'));
-app.use('/api',require('./routes/profesor'));
-app.use('/api',require('./routes/curso'));
-app.use('/api',require('./routes/logic'));
+app.use('/api', require('./routes/alumno'));
+app.use('/api', require('./routes/profesor'));
+app.use('/api', require('./routes/curso'));
+app.use('/api', require('./routes/logic'));
+
+//sockets
+require('./socket')(io);
+
 //iniciar
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
     console.log("servidor en puerto: " + app.get('port'));
 });
