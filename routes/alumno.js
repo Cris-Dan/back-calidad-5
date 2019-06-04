@@ -11,7 +11,7 @@ const Alumno = require('../models/Alumno');
 router.get('/login/facebook',
   passport.authenticate('facebook'));
 
-router.get('/return', passport.authenticate('facebook', { failureRedirect: '/login' }),
+router.get('/return', passport.authenticate('facebook', { failureRedirect: '/api/errorFacebok' }),
   function (req, res) {
     //esto deberia enviar a un dashboard o yo que se cuando ya esta logeado
     res.json({ mensaje: 'el usuario fue autentificado con exito por fb puede ver sus datos en la ruta profile' });
@@ -79,6 +79,12 @@ router.get('/logout-alumno', (req, res) => {
   res.json({ respuesta: 'Alumno ha cerrado sesion' });
 });
 
+router.get('/errorFacebook',(req,res)=>
+{
+
+    res.status(205).send({message:'Tu cuenta cayó gaaaaa'});
+    next();
+});
 
 router.get('/alumno/obtenerAlumnos',alumnoController.buscarTodo);
 router.get('/alumno/:username',alumnoController.buscarPorUsername);
