@@ -1,13 +1,13 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const AlumnoSchema = new Schema({
 
   username: { type: String, required: true },
-  password: { type: String },
+  password: { type: String,required:true },
   firstname: { type: String },
   lastname: { type: String },
-  email: { type: String },
+  email: { type: String,required:true },
   genero:{type:String},
   edad:{type:Number},
   facebookId: { type: String },
@@ -21,8 +21,14 @@ AlumnoSchema.methods.encryptPassword = async (password) => {
   return await bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
-AlumnoSchema.methods.comparePassword = async (password, password2) => {
-  return await bcrypt.compareSync(password, password2);
+
+AlumnoSchema.methods.comparePassword = async (password,hash) => {
+  
+  return await bcrypt.compare(password,hash);
 };
+
+/*AlumnoSchema.methods.comparePassword = async (password) => {
+  return await bcrypt.compareSync(password, this.password);
+};*/
 
 module.exports = model('Alumno', AlumnoSchema);

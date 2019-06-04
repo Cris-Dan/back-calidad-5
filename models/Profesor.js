@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const ProfesorSchema = new Schema({
 
@@ -7,15 +7,15 @@ const ProfesorSchema = new Schema({
   password: { type: String, required: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  cursos: {
-    type: [Schema.Types.ObjectId],
-    ref: 'Curso'
-  },
+  cursos: 
+        [{type: Schema.Types.ObjectId,
+            ref: 'Curso'
+        }],
   vecesDictado: { type: Number, default: 0 },
   calificacion: { type: Number },
   email: { type: String, required: true },
-  genero:{type:String},
-  edad:{type:Number},
+  genero:{type:String,required:true},
+  edad:{type:Number,required:true},
   ingresado: { type: Date, default: Date.now() },
   isVerified:{ type:Boolean,default:false}
 });

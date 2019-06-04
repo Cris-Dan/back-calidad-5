@@ -4,6 +4,9 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const alumnoController = require('../controllers/alumno.controller');
 
+
+const Alumno = require('../models/Alumno');
+
 //facebook login
 router.get('/login/facebook',
   passport.authenticate('facebook'));
@@ -15,19 +18,18 @@ router.get('/return', passport.authenticate('facebook', { failureRedirect: '/log
   });
 
 
-router.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
+router.get('/profile',require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
     //Esto se utiliza para verificar los datos del logeado 
 
-    res.json(req.user);
+    res.status(200).json(req.user);
   });
 
 //local login
 router.get('/secret-alumno', (req, res) => {
   let mensaje = "";
   req.isAuthenticated() ? mensaje = "Alumno autenticado" : mensaje = "Alumno NO autenticado";
-  res.json({ respuesta: mensaje });
+  res.status(200).json({ respuesta: mensaje });
 });
 
 router.post('/register-alumno', passport.authenticate('local-register-alumno', { failureFlash: true }), (req, res) => {
@@ -57,22 +59,20 @@ router.get('/confirmation/:token', async (req, res) => {
   }
 });
 
-router.post('/login-alumno', passport.authenticate('local-login-alumno', { failureRedirect: "/errorLogin" }), (req, res) => {
-  if (req.user) {
+router.post('/login-alumno',passport.authenticate('local-login-alumno',{failureRedirect:'/api/failureLogin'}), (req, res,next) => {
+  if(req.user)
+  {
     console.log(req.user);
-    res.json({ message: 'Alumno ha iniciado sesion' });
-  }
-  else {
-    console.log(req.flash("error"));
-    res.json({ message: 'Fallo en autenticacion' });
+    return res.status(200).send({message:'Login Satisfactorio'});
   }
 });
 
 /*Amiguitos intenten hacer que las apis devuelvan un mensaje */
 /**cuando el login o el registro de alumnos estén erroneos */
 /**Ejemplos: mensaje:"Error Login" o algo así XD */
-router.get('/errorLogin', (req, res, next) => {
-  res.json({ message: 'Error Login' });
+router.get('/failureLogin',(req,res)=>
+{
+    res.status(401).send({message:'Error Login'});
 });
 router.get('/logout-alumno', (req, res) => {
   req.logOut();
