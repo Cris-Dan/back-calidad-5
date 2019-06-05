@@ -8,31 +8,20 @@ router.get('/secret-profesor', (req, res) => {
     req.isAuthenticated() ? mensaje ="Profesor autenticado" : mensaje = "Profesor NO autenticado";
     res.json({ respuesta: mensaje });
 });
-
 router.post('/register-profesor', passport.authenticate('local-register-profesor'), (req, res) => {
     res.json({ respuesta: 'Profesor registrado' });
 });
-
 router.post('/login-profesor', passport.authenticate('local-login-profesor',{failureRedirect:'/api/errorLogin'}), (req, res) => {
     res.json({ respuesta: 'Profesor ha iniciado sesion' });
 });
-
-router.get('/logout-profesor', (req, res) => {
-    req.logout();
-    res.json({ respuesta: 'Profesor ha cerrado sesion' });
-});
-
-router.get('/errorLogin',(req,res,next)=>
-{
-    res.status(201).send({message:'Malos credenciales'});
-});
-
-
-
+router.get('/errorLogin',(req,res,next)=> res.status(201).send({message:'Malos credenciales'}));
 router.get('/profesor/buscarTodo',controller.actualizarProfesor);
 router.get('/profesor/buscar/:email',controller.buscarProfesor);
 router.put('/profesor/actualizar/:id',controller.actualizarProfesor);
 router.delete('/profesor/eliminar/:email',controller.eliminarProfesor);
-
+router.get('/logout-profesor', (req, res) => {
+    req.logout();
+    res.json({ respuesta: 'Profesor ha cerrado sesion' });
+});
 
 module.exports = router;
