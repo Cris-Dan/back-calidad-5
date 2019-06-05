@@ -40,15 +40,15 @@ module.exports = {
             const alumnoExiste = await Alumno.findOne({_id: id});
             if (alumnoExiste) {
                 const alumno = {};
-                alumno.username = req.body.username;
+                if(req.body.username != null) alumno.username = req.body.username;
                 if (req.body.password != null && !alumnoExiste.comparePassword(req.body.password, alumnoExiste.password)) {
                     alumno.password = await alumno.encryptPassword(req.body.password);
                 }
-                alumno.firstname = req.body.firstname;
-                alumno.lastname = req.body.lastname;
-                alumno.email = req.body.email;
-                alumno.edad= req.body.edad;
-                alumno.genero = req.body.genero;
+                if(req.body.firstname != null) alumno.firstname = req.body.firstname;
+                if(req.body.lastname != null) alumno.lastname = req.body.lastname;
+                if(req.body.email != null) alumno.email = req.body.email;
+                if(req.body.edad != null) alumno.edad= req.body.edad;
+                if(req.body.genero != null) alumno.genero = req.body.genero;
                 Alumno.findOneAndUpdate({_id: alumnoExiste._id}, alumno, {new: true}).then((alumno) => {
                     res.send({message: 'se actualizo con exito.', alumno});
                 }).catch((err) => {
