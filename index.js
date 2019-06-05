@@ -8,7 +8,7 @@ var expressSession = require('express-session');
 const socketIO = require('socket.io');
 const http = require('http');
 const cors = require('cors');
-
+const socket = require('./socket');
 const connectFlash = require('connect-flash');
 
 // Create a new Express application.
@@ -39,7 +39,7 @@ app.use('/api', require('./routes/curso'));
 app.use('/api', require('./routes/logic'));
 
 //sockets
-require('./socket')(io);
+socket(io);
 
 //iniciar
 server.listen(app.get('port'), () => {

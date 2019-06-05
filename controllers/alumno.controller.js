@@ -158,11 +158,12 @@ module.exports = {
             res.send({ message: "No se encontro al alumno" });
         }
     }
-
-    /*// retorna un alumno
+    // retorna un alumno
+    /*
     buscarPorEmail: async (email) => {
         return await Alumno.findOne({email});
-    },
+    }
+    
     // retorna un array de alumnos
     buscarPorNombre: async (firstname) => {
         return await Alumno.find({firstname});
