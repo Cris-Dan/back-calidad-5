@@ -21,7 +21,8 @@ router.get('/return', passport.authenticate('facebook', { failureRedirect: '/api
 router.get('/profile',require('connect-ensure-login').ensureLoggedIn(),
   function (req, res) {
     //Esto se utiliza para verificar los datos del logeado 
-
+    
+    console.log(require('connect-ensure-login').ensureLoggedIn());
     res.status(200).json(req.user);
   });
 
@@ -87,7 +88,7 @@ router.get('/errorFacebook',(req,res)=>
 });
 
 router.get('/alumno/obtenerAlumnos',alumnoController.buscarTodo);
-router.get('/alumno/:username',alumnoController.buscarPorUsername);
+router.get('/alumno/:email',alumnoController.buscarPorEmail);
 router.put('/alumno/actualizar/:id',alumnoController.actualizar);
 router.delete('/alumno/eliminar/:id',alumnoController.eliminar);
 

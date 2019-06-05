@@ -16,11 +16,11 @@ module.exports = {
             res.send({message: 'no se encontraron alumnos'});
         }
     },
-    buscarPorUsername: async (req, res) => {
-        const {username} = req.params;
-        console.log(username);
+    buscarPorEmail: async (req, res) => {
+        const {email} = req.params;
+        console.log(email);
         try {
-            const existeAlumno = await Alumno.findOne({username});
+            const existeAlumno = await Alumno.findOne({email});
             if (existeAlumno != null) {
                 res.send(existeAlumno);
 
