@@ -26,9 +26,9 @@ router.get('/errorLogin',(req,res,next)=>
 {
     res.status(201).send({message:'Malos credenciales'});
 });
-
-
-
+router.get('/profesor/aceptarSolicitud',controller.aceptarSolicitud);
+router.get('/profesor/denegarSolicitud',controller.denegarSolicitud);
+router.get('/solicitar',controller.solicitarProfesor);
 router.get('/profesor/buscarTodo',controller.actualizarProfesor);
 router.get('/profesor/buscar/:email',controller.buscarProfesor);
 router.put('/profesor/actualizar/:id',controller.actualizarProfesor);
