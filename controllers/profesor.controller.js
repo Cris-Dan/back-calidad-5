@@ -61,6 +61,7 @@ exports.actualizarProfesor = async (req, res, next) => {
         res.status(401).send({ message: "No se encontro al profesor" });
     }
 }
+
 exports.solicitarProfesor = async (req, res) => {
 
     const { idALumno, idProfesor } = req.body;
@@ -89,12 +90,12 @@ exports.denegarSolicitud = async (req, res) => {
 }
 exports.aceptarSolicitud = async (req, res) => {
     const { idAlumno, idProfesor } = req.body;
-    var solicitudAnterior = { alumno: idAlumno, aceptado: false }
-    var solicitudAceptada = { alumno: idAlumno, aceptado: true }
+    var solicitud = { alumno: idAlumno, aceptado: false }
     const profesor = await Profesor.findOne({ _id: idProfesor });
     if (profesor) {
-        var index = profesor.solicitudes.indexOf(solicitudAnterior);
-        profesor.solicitudes.splice(index, 1, solicitudAceptada);
+        var index = profesor.solicitudes.indexOf(solicitud);
+        solicitud.aceptado =true;
+        profesor.solicitudes.splice(index, 1, solicitud);
         await profesor.save();
         res.status(200).send({ message: 'solicitud aceptada.' });
     } else {

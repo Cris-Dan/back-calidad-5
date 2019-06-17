@@ -29,7 +29,7 @@ router.get('/errorLogin',(req,res,next)=>
 router.get('/profesor/verEstadoSolicitud',controller.verEstadoSolicitud);
 router.get('/profesor/aceptarSolicitud',controller.aceptarSolicitud);
 router.get('/profesor/denegarSolicitud',controller.denegarSolicitud);
-router.get('/profesor/solicitar',controller.solicitarProfesor);
+router.get('/solicitar',controller.solicitarProfesor);
 router.get('/profesor/buscarTodo',controller.actualizarProfesor);
 router.get('/profesor/buscar/:email',controller.buscarProfesor);
 router.put('/profesor/actualizar/:id',controller.actualizarProfesor);
