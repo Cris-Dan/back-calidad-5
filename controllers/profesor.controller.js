@@ -100,5 +100,21 @@ exports.aceptarSolicitud = async (req, res) => {
     } else {
         res.status(400).send({ message: 'no existe el profesor.' });
     }
+}
 
+exports.verEstadoSolicitud = async (req, res) => {
+    const { idAlumno, idProfesor } = req.body;
+    const profesor = await Profesor.findOne({ _id: idProfesor });
+    if (profesor) {
+        const sol = profesor.solicitudes.find((solicitud) => {
+            return solicitud.idALumno == idAlumno;
+        })
+        if (sol.aceptado) {
+            res.status(200).send({ message: 'solicitud aceptada.' });
+        } else {
+            res.status(200).send({ message: 'solicitud denegada.' });
+        }
+    } else {
+        res.status(400).send({ message: 'no existe el profesor.' });
+    }
 }
