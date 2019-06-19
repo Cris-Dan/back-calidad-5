@@ -10,6 +10,7 @@ const AlumnoSchema = new Schema({
   email: { type: String,required:true },
   genero:{type:String},
   edad:{type:Number},
+  coords:[Number],
   facebookId: { type: String },
   ingresado: { type: Date, default: Date.now() },
   isVerified: { type: Boolean, default: false, required: true },
