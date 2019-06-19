@@ -27,17 +27,14 @@ exports.actualizarCurso = async(req,res)=>
     if(!req.body.nombre || !req.body.marco)
         return res.status(401).send({message:'Error de validacion'});
 
-    var descripcion;
-    var url_imagen;
-    if(req.body.url_imagen != null) url_imagen=req.body.url_imagen;
-    if(req.body.descripcion != null) descripcion=req.body.descripcion;
+    const curso = {};
+    curso.nombre=req.body.nombre;
+    curso.marco=req.body.marco;
+    if(req.body.url_imagen != null) curso.url_imagen=req.body.url_imagen;
+    if(req.body.descripcion != null) curso.descripcion=req.body.descripcion;
+    //if(req.body.veces_solicitado != null) curso.veces_solicitado=req.body.veces_solicitado;
 
-    Curso.findOneAndUpdate({nombre}, {
-        nombre:req.body.nombre,
-        marco:req.body.marco,
-        descripcion: descripcion,
-        url_imagen: url_imagen
-    }, {new: true})
+    Curso.findOneAndUpdate({nombre}, curso , {new: true})
     .then(curso => {
         if(!curso) {
          return res.status(404).send({
