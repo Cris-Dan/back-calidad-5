@@ -38,6 +38,7 @@ app.use('/api',require('./routes/alumno'));
 app.use('/api',require('./routes/profesor'));
 app.use('/api',require('./routes/curso'));
 app.use('/api',require('./routes/logic'));
+app.use('/api',require('./routes/estadistica'));
 
 //sockets
 socket(io);

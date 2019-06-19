@@ -15,6 +15,7 @@ localhost:3000/api/alumno/:username
 localhost:3000/api/alumno/actualizar/:id
 localhost:3000/api/alumno/eliminar/:id
 
+
 Descripcion:
 
 GET localhost:3000/api/login/facebook
@@ -129,6 +130,47 @@ ejm:
         "email": "d@d.com",
         "__v": 0
     }
+}
+
+ESTADISTICAS
+
+localhost:3000/api/estadistica/cantidad
+devuelve la cantidad de alumnos, profesores, cursos. Tambien devuelve el promedio de
+las edades de alumnos y profesores, ademas del numero de profesores y profesoras
+y los 3 cursos mas solicitados. ejm;
+{
+    "numAlumnos": 3,
+    "numProfesores": 3,
+    "numCursos": 10,
+    "promEdadAlumnos": 21.333333333333332,
+    "promEdadProfesores": 25,
+    "numProfeVarones": 1,
+    "numProfeMujeres": 2,
+    "cursosMasSolicitados": [
+        {
+            "_id": "5cecd2965f69d92b12316181",
+            "nombre": "Trigonometria",
+            "marco": "Matematica",
+            "__v": 0,
+            "veces_solicitado": 5
+        },
+        {
+            "_id": "5cecd28c5f69d92b12316180",
+            "nombre": "Geometria",
+            "marco": "Matematica",
+            "__v": 0,
+            "veces_solicitado": 4
+        },
+        {
+            "_id": "5cecd2855f69d92b1231617f",
+            "nombre": "Aritmetica",
+            "marco": "Matematica",
+            "__v": 0,
+            "descripcion": "descriopcion1",
+            "url_imagen": "url",
+            "veces_solicitado": 2
+        }
+    ]
 }
 
 
