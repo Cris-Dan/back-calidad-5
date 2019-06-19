@@ -40,6 +40,8 @@ exports.cantidadProfesoresF = async (req, res) => {
 }
 
 exports.cantidad = async (req, res) => {
+    const cProfesorM = await Profesor.countDocuments({genero: 'Masculino'}).exec()
+    const cProfesorF = await Profesor.countDocuments({genero: 'Femenino'}).exec()
     const cAlumnos = await Alumno.countDocuments({}).exec();
     const cProfesores = await Profesor.countDocuments({}).exec();
     const cCursos = await Curso.countDocuments({}).exec();
@@ -61,6 +63,8 @@ exports.cantidad = async (req, res) => {
         numCursos: cCursos,
         promEdadAlumnos: promEdadAlumnos[0].promEdad,
         promEdadProfesores: promEdadProfesores[0].promEdad,
+        numProfeVarones: cProfesorM,
+        numProfeMujeres: cProfesorF,
         cursosMasSolicitados
     }
     console.log(estadisticas);
