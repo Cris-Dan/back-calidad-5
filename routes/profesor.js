@@ -30,7 +30,7 @@ router.get('/profesor/verEstadoSolicitud',controller.verEstadoSolicitud);
 router.get('/profesor/aceptarSolicitud',controller.aceptarSolicitud);
 router.get('/profesor/denegarSolicitud',controller.denegarSolicitud);
 router.get('/solicitar',controller.solicitarProfesor);
-router.get('/profesor/buscarTodo',controller.actualizarProfesor);
+router.get('/profesor/buscarTodo',controller.buscarTodos);
 router.get('/profesor/buscar/:email',controller.buscarProfesor);
 router.put('/profesor/actualizar/:id',controller.actualizarProfesor);
 router.delete('/profesor/eliminar/:email',controller.eliminarProfesor);
