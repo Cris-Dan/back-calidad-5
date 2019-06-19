@@ -5,6 +5,8 @@ const CursoSchema = new Schema({
     marco:{type:String, required:true},
     veces_solicitado:{type:Number},
     creadeAt:{type:Date,default:Date.now},
-    updateAt:Date
+    updateAt:Date,
+    url_imagen: {type: String },
+    descripcion: {type: String }
 });
 module.exports = model('Curso', CursoSchema);

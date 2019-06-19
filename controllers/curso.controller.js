@@ -12,6 +12,8 @@ exports.crearCurso = async (req,res)=>
         const newCurso = new Curso({});
         newCurso.nombre=req.body.nombre;
         newCurso.marco=req.body.marco;
+        if(req.body.url_imagen != null) newCurso.url_imagen=req.body.url_imagen;
+        if(req.body.descripcion != null) newCurso.descripcion=req.body.descripcion;
 
         await newCurso.save();
         res.status(200).send({Mensaje:'Creado'});
@@ -25,11 +27,16 @@ exports.actualizarCurso = async(req,res)=>
     if(!req.body.nombre || !req.body.marco)
         return res.status(401).send({message:'Error de validacion'});
 
-
+    var descripcion;
+    var url_imagen;
+    if(req.body.url_imagen != null) url_imagen=req.body.url_imagen;
+    if(req.body.descripcion != null) descripcion=req.body.descripcion;
 
     Curso.findOneAndUpdate({nombre}, {
         nombre:req.body.nombre,
-        marco:req.body.marco
+        marco:req.body.marco,
+        descripcion: descripcion,
+        url_imagen: url_imagen
     }, {new: true})
     .then(curso => {
         if(!curso) {
