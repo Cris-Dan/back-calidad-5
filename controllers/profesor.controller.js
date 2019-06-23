@@ -93,9 +93,11 @@ exports.aceptarSolicitud = async (req, res) => {
     var solicitud = { alumno: idAlumno, aceptado: false }
     const profesor = await Profesor.findOne({ _id: idProfesor });
     if (profesor) {
-        var index = profesor.solicitudes.indexOf(solicitud);
-        solicitud.aceptado =true;
-        profesor.solicitudes.splice(index, 1, solicitud);
+        profesor.solicitudes.find((solicitud) => {
+            if (solicitud.idALumno == idAlumno) {
+                solicitud.aceptado = true;
+            }
+        })
         await profesor.save();
         res.status(200).send({ message: 'solicitud aceptada.' });
     } else {

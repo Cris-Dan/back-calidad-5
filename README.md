@@ -174,6 +174,60 @@ y los 3 cursos mas solicitados. ejm;
 }
 
 
+SOLICITUDES
+
+las solicitudes estan puestas como un campo en el documento profesor de la siguienta manera:
+
+solicitudes: [{
+      alumno: {
+        type: Schema.Types.ObjectId,
+        ref: 'Alumno'
+      },
+      aceptado: { type: Boolean, required: false }
+            }],
+
+y las rutas para interactuar con ellas son las siguientes:
+
+localhost:3000/api/profesor/verEstadoSolicitud
+si funciona correctamente deberia retornar { message: 'solicitud aceptada.' } o { message: 'solicitud denegada.' }
+
+localhost:3000/api/profesor/aceptarSolicitud
+si funciona correctamente deberia retornar { message: 'solicitud aceptada.' }
+
+localhost:3000/api/profesor/denegarSolicitud
+si funciona correctamente deberia retornar { message: 'solicitud denegada.' }
+
+localhost:3000/api/profesor/solicitar
+si funciona correctamente deberia retornar { message: 'solicitud completada.' }
+
+en todos los casos si no existe el profesor devolvera { message: 'no existe el profesor.' }
+para todo lo de mas existe error 400 
+
+
+todas las rutas son metodo get 
+por lo cual recibe a travez del body 
+el idAlumno que quiere solicitar y el idProfesor al cual quiere solicitar
+de la forma: 
+
+const { idAlumno, idProfesor } = req.body;
+
+los metodos indexOf y splice son para tratar con Arrays en javascript
+no es otra libreria pe mascota, si no sabes que es buscalo en google
+
+COORDENADAS SOCKET
+
+socket.js contiene la funcion por la cual se recibien las coordenas y se las agrega a un alumno
+desde el front se tiene que enviar en un json email del alumno y las coordenas
+para que se puedan usar sockets todo la app en index.js esta envuelta por esta uwu
+si el server no responde quizas sea que puse mal eso ultimo jsjs
+
+ya que socket siempre esta recibiendo data no se si la coordenada esta en todo momento recibiendoce :c
+o solo cuando se manda desde el front solo una vez
+
+
+
+
+
 
 
 
