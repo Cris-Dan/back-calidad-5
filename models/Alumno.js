@@ -15,7 +15,8 @@ const AlumnoSchema = new Schema({
   ingresado: { type: Date, default: Date.now() },
   isVerified: { type: Boolean, default: false, required: true },
   createdAt:{type: Date, default:Date.now},
-  updateAt:{type:Date}
+  updateAt:{type:Date},
+  usuario:{type:String,default:'Alumno'}
 });
 
 AlumnoSchema.methods.encryptPassword = async (password) => {

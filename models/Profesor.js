@@ -26,7 +26,8 @@ const ProfesorSchema = new Schema({
   genero: { type: String, required: true },
   edad: { type: Number, required: true },
   ingresado: { type: Date, default: Date.now() },
-  isVerified: { type: Boolean, default: false }
+  isVerified: { type: Boolean, default: false },
+  usuario:{type:String,default:'Profesor'}
 });
 
 ProfesorSchema.methods.encryptPassword = async (password) => {
