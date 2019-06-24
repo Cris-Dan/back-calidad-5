@@ -10,14 +10,12 @@ module.exports = async function enviar_email(data,req){
     
     // create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
-        host:'smtpout.secureserver.net',
-        service: 'gmail',
-        auth: {
-               user: process.env.EMAIL, 
-               pass: process.env.EMAILPASSWORD
-           },
-        secure:true
-       });
+      service: 'gmail',
+      auth: {
+             user: process.env.EMAIL, 
+             pass: process.env.EMAILPASSWORD
+         }
+     });
   
     const linkGenerado = 'http:\/\/' + req.headers.host + '\/api/confirmation\/' + token;
 
