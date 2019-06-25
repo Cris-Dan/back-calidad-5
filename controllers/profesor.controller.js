@@ -70,7 +70,7 @@ exports.solicitarProfesor = async (req, res) => {
         var solicitud = { alumno: idALumno }
         profesor.solicitudes.push(solicitud);
         await profesor.save();
-        res.status(200).send({ message: 'solicitud completada.' });
+        res.status(200).send({ message: 'OK' });
     } else {
         res.status(400).send({ message: 'no existe el profesor.' });
     }
@@ -83,7 +83,7 @@ exports.denegarSolicitud = async (req, res) => {
         var index = profesor.solicitudes.indexOf(solicitud);
         profesor.solicitudes.splice(index, 1);
         await profesor.save();
-        res.status(200).send({ message: 'solicitud denegada.' });
+        res.status(200).send({ message: 'OK' });
     } else {
         res.status(400).send({ message: 'no existe el profesor.' });
     }
@@ -97,9 +97,10 @@ exports.aceptarSolicitud = async (req, res) => {
             if (solicitud.idALumno == idAlumno) {
                 solicitud.aceptado = true;
             }
-        })
+        });
+        profesor.vecesDictado=profesor.vecesDictado+1;
         await profesor.save();
-        res.status(200).send({ message: 'solicitud aceptada.' });
+        res.status(200).send({ message: 'OK' });
     } else {
         res.status(400).send({ message: 'no existe el profesor.' });
     }
@@ -113,7 +114,7 @@ exports.verEstadoSolicitud = async (req, res) => {
             return solicitud.idALumno == idAlumno;
         })
         if (sol.aceptado) {
-            res.status(200).send({ message: 'solicitud aceptada.' });
+            res.status(200).send({ message: 'OK' });
         } else {
             res.status(200).send({ message: 'solicitud denegada.' });
         }

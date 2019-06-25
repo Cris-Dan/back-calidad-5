@@ -9,77 +9,88 @@ module.exports = {
             if (alumnos != null) {
                 res.send(alumnos);
             } else {
-                res.send({message: 'no se encontraron alumnos'});
+                res.send({ message: 'no se encontraron alumnos' });
             }
 
         } catch (e) {
-            res.send({message: 'no se encontraron alumnos'});
+            res.send({ message: 'no se encontraron alumnos' });
         }
     },
     buscarPorEmail: async (req, res) => {
-        const {email} = req.params;
+        const { email } = req.params;
         console.log(email);
         try {
-            const existeAlumno = await Alumno.findOne({email});
+            const existeAlumno = await Alumno.findOne({ email });
             if (existeAlumno != null) {
                 res.send(existeAlumno);
 
             } else {
-                res.send({message: 'no se encontro al alumno'});
+                res.send({ message: 'no se encontro al alumno' });
             }
 
         } catch (e) {
-            res.send({message: 'no se encontro al alumno'});
+            res.send({ message: 'no se encontro al alumno' });
         }
     },
 
     //retorna el valor anterior a la actualizacion
     actualizar: async (req, res) => {
-        const {id} = req.params;
+        const { id } = req.params;
         try {
-            const alumnoExiste = await Alumno.findOne({_id: id});
+            const alumnoExiste = await Alumno.findOne({ _id: id });
             if (alumnoExiste) {
                 const alumno = {};
-                if(req.body.username != null) alumno.username = req.body.username;
+                if (req.body.username != null) alumno.username = req.body.username;
                 if (req.body.password != null && !alumnoExiste.comparePassword(req.body.password, alumnoExiste.password)) {
                     alumno.password = await alumno.encryptPassword(req.body.password);
                 }
-                if(req.body.firstname != null) alumno.firstname = req.body.firstname;
-                if(req.body.lastname != null) alumno.lastname = req.body.lastname;
-                if(req.body.email != null) alumno.email = req.body.email;
-                if(req.body.edad != null) alumno.edad= req.body.edad;
-                if(req.body.genero != null) alumno.genero = req.body.genero;
-                Alumno.findOneAndUpdate({_id: alumnoExiste._id}, alumno, {new: true}).then((alumno) => {
-                    res.send({message: 'se actualizo con exito.', alumno});
+                if (req.body.firstname != null) alumno.firstname = req.body.firstname;
+                if (req.body.lastname != null) alumno.lastname = req.body.lastname;
+                if (req.body.email != null) alumno.email = req.body.email;
+                if (req.body.edad != null) alumno.edad = req.body.edad;
+                if (req.body.genero != null) alumno.genero = req.body.genero;
+                Alumno.findOneAndUpdate({ _id: alumnoExiste._id }, alumno, { new: true }).then((alumno) => {
+                    res.send({ message: 'se actualizo con exito.', alumno });
                 }).catch((err) => {
                     throw new Error(err);
                 });
             } else {
-                res.send({message: "No se encontro al alumno"});
+                res.send({ message: "No se encontro al alumno" });
             }
         } catch (e) {
-            res.send({message: "No se encontro al alumno"});
+            res.send({ message: "No se encontro al alumno" });
         }
     },
     //retorna el alumno eliminado
     eliminar: async (req, res) => {
-        const {id} = req.params;
-        try {
-            const alumnoExiste = await Alumno.findOne({_id: id});
-            console.log(alumnoExiste);
-            if (alumnoExiste) {
+        const { id } = req.params;
+        
+        const alumno = await Alumno.findOneAndDelete({_id:id});
 
-                Alumno.findOneAndRemove(alumnoExiste._id).then((alumno) => {
-                    res.send({message: 'se elimino al alumno con exito.', alumno});
-                }).catch((err) => {
-                    throw new Error(err);
-                });
-            } else {
-                res.send({message: "No se encontro al alumno"});
-            }
-        } catch (e) {
-            res.send({message: "No se encontro al alumno"});
+        if(!alumno)
+        {
+            return res.status(206).send({message:'FAILED'});
         }
+        
+        console.log(alumno);
+        
+        return res.status(200).send({message:'OK'})
+        
+/*
+        Alumno.findOneAndDelete({ _id:id })
+            .then(alumno => {
+                if (!alumno) {
+                    return res.status(404).send({
+                        message: "No se encontro alumno con nombre " + alumno.nombre
+                    });
+                }
+                return res.status(200).send({ message: "Alumno eliminado" });
+            }).catch(err => {
+                return res.status(404).send({
+                    message: "No se encontro curso con nombre " + alumno.nombre
+                });
+            });
+*/
     }
 
     /*// retorna un alumno

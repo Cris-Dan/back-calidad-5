@@ -8,7 +8,7 @@ var cookierParser = require('cookie-parser');
 var expressSession = require('express-session');
 const socket = require('./socket');
 const cors = require('cors');
-
+const path = require('path');
 const connectFlash = require('connect-flash');
 
 
@@ -17,13 +17,17 @@ const connectFlash = require('connect-flash');
 var app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
+
 require('./database');
 require('./passport/auth');
+
 //configs
 app.set('port', process.env.PORT || 4000);
+app.set('view engine','ejs');
 
 //middlewares
 app.use(morgan('dev'));
+app.use('/public',express.static(path.join((__dirname+'/public'))));
 app.use(cors());
 app.use(cookierParser());
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +37,8 @@ app.use(passport.session());
 app.use(express.json());
 app.use(connectFlash());
  
+console.log(__dirname);
+
 //routes.
 app.use('/api',require('./routes/alumno'));
 app.use('/api',require('./routes/profesor'));

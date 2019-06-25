@@ -46,18 +46,27 @@ router.get('/confirmation/:token', async (req, res) => {
   const userdecode = jwt.decode(req.params.token);
   console.log(userdecode.data.email);
   if (!userdecode)
-    res.json({ estado: "Rechazado" });
+    return res.render('Rechazado',{titulo:'Error Email | FastTeach'});
   else {
     const alumno = await Alumno.findOne({ email: userdecode.data.email });
     if (!alumno)
-      res.json({ estado: "Rechazado" });
+      return res.render('Rechazado',{titulo:'Error Email | FastTeach'});//res.json({ estado: "Rechazado" });
     else {
       alumno.isVerified = true;
       await alumno.save();
-      res.json({ estado: "Aceptado" });
+      return res.render('Confirmado',{titulo:'Email Confirmado | FastTeach'})//res.json({ estado: "Aceptado" });
     }
 
   }
+});
+
+router.get('/appTest',(req,res,next)=>
+{
+    return res.render('Confirmado',{titulo:'Confirmado | FastTeach '});
+});
+router.get('/appFail',(req,res,next)=>
+{
+    return res.render('Rechazado',{titulo:'Error | FastTeach'});
 });
 
 router.post('/login-alumno',passport.authenticate('local-login-alumno',{failureRedirect:'/api/failureLogin'}), (req, res,next) => {
