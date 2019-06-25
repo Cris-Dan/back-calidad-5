@@ -113,3 +113,13 @@ exports.ordenar_profesor_por_mas_dictado_curso = async(req,res)=>
     }
     return res.status(200).send(profesores_por_mas_dictado_curso);
 }
+exports.cursosTop= async(req,res)=>
+{
+    const cursos = await Curso.find({}).limit(5).sort({veces_solicitado:-1});
+
+    if(cursos.length==0)
+    {
+        return res.status(206).send({message:'No hay cursos'});
+    }
+    return res.status(200).send(cursos);
+}
