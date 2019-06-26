@@ -8,9 +8,11 @@ const ProfesorSchema = new Schema({
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   cursos:
-    [
-      {type: Schema.Types.ObjectId,ref: 'Curso'}
-    ],
+    [{
+      curso:{
+        type: Schema.Types.ObjectId,
+        ref: 'Curso'}
+    }],
   solicitudes:
     [{
       alumno: {

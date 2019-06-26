@@ -4,38 +4,38 @@ const Curso = require('../models/Curso');
 
 exports.cantidadAlumnos = async (req, res) => {
     Alumno.countDocuments({}).exec().then((cantidad) => {
-        res.status(200).send({cantidad});
+        return res.status(200).send({cantidad});
     }).catch((err) => {
-        res.status(400).send('error en obtener la cantidad de alumnos');
+        return res.status(400).send('error en obtener la cantidad de alumnos');
     })
 }
 
 exports.cantidadProfesores = async (req, res) => {
     Profesor.countDocuments({}).exec().then((cantidad) => {
-        res.status(200).send({cantidad});
+        return res.status(200).send({cantidad});
     }).catch((err) => {
-        res.status(400).send('error en obtener la cantidad de profesores');
+        return res.status(400).send('error en obtener la cantidad de profesores');
     })
 }
 exports.cantidadCursos = async (req, res) => {
     Curso.countDocuments({}).exec().then((cantidad) => {
-        res.status(200).send({cantidad});
+       return res.status(200).send({cantidad});
     }).catch((err) => {
-        res.status(400).send('error en obtener la cantidad de cursos');
+       return  res.status(400).send('error en obtener la cantidad de cursos');
     })
 }
 exports.cantidadProfesoresM = async (req, res) => {
     Profesor.countDocuments({genero: 'Masculino'}).exec().then((cantidad) => {
-        res.status(200).send({cantidad});
+        return res.status(200).send({cantidad});
     }).catch((err) => {
-        res.status(400).send('error en obtener la cantidad de profesores varones');
+        return res.status(400).send('error en obtener la cantidad de profesores varones');
     })
 }
 exports.cantidadProfesoresF = async (req, res) => {
     Profesor.countDocuments({genero: 'Femenino'}).exec().then((cantidad) => {
-        res.status(200).send({cantidad});
+        return res.status(200).send({cantidad});
     }).catch((err) => {
-        res.status(400).send('error en obtener la cantidad de profesoras');
+        return res.status(400).send('error en obtener la cantidad de profesoras');
     })
 }
 
@@ -68,7 +68,7 @@ exports.cantidad = async (req, res) => {
         cursosMasSolicitados
     }
     console.log(estadisticas);
-    res.send(estadisticas);
+    return res.status(200).send(estadisticas);
 }
 
 
