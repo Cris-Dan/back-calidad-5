@@ -123,3 +123,23 @@ exports.cursosTop= async(req,res)=>
     }
     return res.status(200).send(cursos);
 }
+
+exports.agregarCursoAProfesor =  async (req,res,next)=>
+{
+    const {idCurso} = req.body;
+    const {idProfesor} = req.body;
+    
+    const profesor = await Profesor.find({_id:idProfesor});
+    console.log(profesor);
+    if(profesor)
+    {
+        var inscripcion  = {curso:idCurso};
+        profesor.cursos.push(inscripcion);
+        await profesor.save();
+        return res.status(200).send({message:'OK'});
+    }else{
+        return res.status(206).send({message:'ERROR'});
+    }
+    
+
+};

@@ -67,7 +67,7 @@ exports.solicitarProfesor = async (req, res) => {
     const { idALumno, idProfesor } = req.body;
     const profesor = await Profesor.findOne({ _id: idProfesor });
     if (profesor) {
-        var solicitud = { alumno: idALumno }
+        var solicitud = { alumno: idALumno };
         profesor.solicitudes.push(solicitud);
         await profesor.save();
         res.status(200).send({ message: 'OK' });

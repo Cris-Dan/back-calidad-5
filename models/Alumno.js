@@ -16,6 +16,10 @@ const AlumnoSchema = new Schema({
   isVerified: { type: Boolean, default: false, required: true },
   createdAt:{type: Date, default:Date.now},
   updateAt:{type:Date},
+  historialCursos:[{
+    type: Schema.Types.ObjectId,
+    ref: 'Curso'
+  }],
   usuario:{type:String,default:'Alumno'}
 });
 
