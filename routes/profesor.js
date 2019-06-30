@@ -3,6 +3,7 @@ const router = Router();
 const passport = require('passport');
 const controller = require('../controllers/profesor.controller');
 const jwt = require('jsonwebtoken');
+const Profesor = require('../models/Profesor');
 router.get('/secret-profesor', (req, res) => {
     let mensaje ="";
     req.isAuthenticated() ? mensaje ="Profesor autenticado" : mensaje = "Profesor NO autenticado";
