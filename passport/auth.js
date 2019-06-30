@@ -74,7 +74,7 @@ passport.use('local-register-alumno', new LocalStrategy({
     alumno.edad = req.body.edad;
     await alumno.save();
 
-    emailer(alumno, req);
+    await emailer(alumno, req);
 
     return done(null, alumno);
 
@@ -131,6 +131,8 @@ passport.use('local-register-profesor', new LocalStrategy({
     profesor.edad=req.body.edad;
     await profesor.save();
     
+    await emailer(profesor, req);
+
     return done(null, profesor);
 
 }));

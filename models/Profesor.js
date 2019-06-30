@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-
 const ProfesorSchema = new Schema({
 
   username: { type: String, required: true },
