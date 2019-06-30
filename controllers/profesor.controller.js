@@ -1,4 +1,5 @@
 const Profesor = require('../models/Profesor');
+const CursoProfesor = require('../models/CursoProfesor');
 
 exports.buscarProfesor = async (req, res, next) => {
     const { email } = req.params;
@@ -98,7 +99,7 @@ exports.aceptarSolicitud = async (req, res) => {
                 solicitud.aceptado = true;
             }
         });
-        profesor.vecesDictado=profesor.vecesDictado+1;
+        profesor.vecesDictado = profesor.vecesDictado + 1;
         await profesor.save();
         res.status(200).send({ message: 'OK' });
     } else {
@@ -120,5 +121,56 @@ exports.verEstadoSolicitud = async (req, res) => {
         }
     } else {
         res.status(400).send({ message: 'no existe el profesor.' });
+    }
+}
+exports.adjuntarCurso = async (req, res) => {
+    const { idProfesor, idCurso } = req.body;
+    const existe = await CursoProfesor.findOne({ idProfesor: idProfesor, idCurso: idCurso });
+    console.log(existe);
+    if (existe) {
+        return res.status(400).send({ message: 'ya existe este profesor en el curso' });
+    }
+    const cursoProfesor = new CursoProfesor();
+    cursoProfesor.idProfesor = idProfesor;
+    cursoProfesor.idCurso = idCurso;
+    await cursoProfesor.save();
+    return res.status(200).send({ message: 'OK' });
+
+}
+exports.quitarCurso = async (req, res) => {
+    const { idProfesor, idCurso } = req.body;
+    const existe = await CursoProfesor.findOneAndDelete({ idProfesor: idProfesor, idCurso: idCurso });
+    console.log(existe);
+    if (existe) {
+        return res.status(200).send({ message: 'OK' });
+    } else {
+        return res.status(400).send({ message: "quien sabe que salio mal" });
+    }
+
+}
+exports.buscarTodosCursosProfesor = async (req, res) => {
+    CursoProfesor.find()
+        .then(cursoProfesor => {
+            return res.status(200).send(cursoProfesor);
+        }).catch(err => {
+            return res.status(500).send({
+                message: err.message || "Error de Servidor"
+            });
+        });
+}
+exports.buscarCursosPorProfesor = async (req, res) => {
+    const cpp = await CursoProfesor.find({ idProfesor: req.body.idProfesor });
+    if (cpp) {
+        return res.status(200).send(cpp);
+    } else {
+        return res.status(404).send({ message: "no se encontro nadita uwu" });
+    }
+}
+exports.buscarProfesoresPorCurso = async (req, res) => {
+    const ppc = await CursoProfesor.find({ idCurso: req.body.idCurso });
+    if (ppc) {
+        return res.status(200).send(ppc);
+    } else {
+        return res.status(404).send({ message: "no se encontro nadita uwu" });
     }
 }
