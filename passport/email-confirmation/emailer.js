@@ -16,9 +16,16 @@ module.exports = async function enviar_email(data,req){
              pass: process.env.EMAILPASSWORD
          }
      });
-  
-    const linkGenerado = 'http:\/\/' + req.headers.host + '\/api/confirmation\/' + token;
-
+     
+     const linkGenerado="";
+     if(data.tipo_usuario=="Profesor")
+     {
+      linkGenerado = 'http:\/\/' + req.headers.host + '\/api/confirmation\/' + token;
+     }
+     else{
+      linkGenerado='http:\/\/' + req.headers.host + '\/profesor/api/confirmation\/' + token;
+     }
+     
     // send mail with defined transport object
     const info = await transporter.sendMail({
       from: process.env.EMAIL, // sender address
