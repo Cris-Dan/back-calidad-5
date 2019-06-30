@@ -224,8 +224,28 @@ si el server no responde quizas sea que puse mal eso ultimo jsjs
 ya que socket siempre esta recibiendo data no se si la coordenada esta en todo momento recibiendoce :c
 o solo cuando se manda desde el front solo una vez
 
+CURSOS POR PROFESOR
 
+todos son metodo get
 
+{
+	"idCurso":"5cecd2c95f69d92b12316184",
+	"idProfesor":"5cf307adc4756f570351f4a9"
+}
+
+localhost:3000/api/profesor/adjuntarCurso
+localhost:3000/api/profesor/quitarCurso
+localhost:3000/api/profesor/buscarTodosCursosProfesor
+
+{
+	"idCurso":"5cecd2c95f69d92b12316184",
+}
+localhost:3000/api/profesor/buscarProfesoresPorCurso
+
+{
+	"idProfesor":"5cf307adc4756f570351f4a9"
+}
+localhost:3000/api/profesor/buscarCursosPorProfesor
 
 
 
