@@ -18,12 +18,12 @@ module.exports = async function enviar_email(data,req){
      });
      
      var linkGenerado="";
-     if(data.tipo_usuario=="Profesor")
+     if(data.usuario=="Profesor")
      {
-      linkGenerado = 'http:\/\/' + req.headers.host + '\/api/confirmation\/' + token;
+      linkGenerado = 'http:\/\/' + req.headers.host + '\/api/alumno/confirmation\/' + token;
      }
      else{
-      linkGenerado='http:\/\/' + req.headers.host + '\/profesor/api/confirmation\/' + token;
+      linkGenerado='http:\/\/' + req.headers.host + '\api/profesor/confirmation\/' + token;
      }
      
     // send mail with defined transport object

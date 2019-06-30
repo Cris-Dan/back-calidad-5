@@ -40,7 +40,7 @@ router.post('/register-alumno', passport.authenticate('local-register-alumno', {
 
 });
 
-router.get('/confirmation/:token', async (req, res) => {
+router.get('/alumno/confirmation/:token', async (req, res) => {
 
   console.log(req.params.token);
   const userdecode = jwt.decode(req.params.token);
