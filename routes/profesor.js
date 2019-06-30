@@ -22,6 +22,26 @@ router.get('/logout-profesor', (req, res) => {
     res.json({ respuesta: 'Profesor ha cerrado sesion' });
 });
 
+router.get('/confirmation/:token',(req,res,next)=>
+{
+  console.log(req.params.token);
+  const userdecode = jwt.decode(req.params.token);
+  console.log(userdecode.data.email);
+  if (!userdecode)
+    return res.render('Rechazado',{titulo:'Error Email | FastTeach'});
+  else {
+    const profesor = await Profesor.findOne({ email: userdecode.data.email });
+    if (!profesor)
+      return res.render('Rechazado',{titulo:'Error Email | FastTeach'});//res.json({ estado: "Rechazado" });
+    else {
+      profesor.isVerified = true;
+      await profesor.save();
+      return res.render('Confirmado',{titulo:'Email Confirmado | FastTeach'})//res.json({ estado: "Aceptado" });
+    }
+
+  }
+});
+
 router.get('/errorLogin',(req,res,next)=>
 {
     res.status(201).send({message:'Malos credenciales'});
