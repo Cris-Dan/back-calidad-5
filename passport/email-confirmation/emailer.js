@@ -23,7 +23,7 @@ module.exports = async function enviar_email(data,req){
       linkGenerado = 'http:\/\/' + req.headers.host + '\/api/alumno/confirmation\/' + token;
      }
      else{
-      linkGenerado='http:\/\/' + req.headers.host + '\api/profesor/confirmation\/' + token;
+      linkGenerado='http:\/\/' + req.headers.host + '\/api/profesor/confirmation\/' + token;
      }
      
     // send mail with defined transport object
