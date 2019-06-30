@@ -18,7 +18,7 @@ module.exports = async function enviar_email(data,req){
      });
      
      var linkGenerado="";
-     if(data.usuario=="Profesor")
+     if(data.usuario=="Alumno")
      {
       linkGenerado = 'http:\/\/' + req.headers.host + '\/api/alumno/confirmation\/' + token;
      }
