@@ -17,13 +17,13 @@ module.exports = async function enviar_email(data,req){
          }
      });
      
-     const linkGenerado="";
-     if(data.tipo_usuario=="Profesor")
+     var linkGenerado="";
+     if(data.usuario=="Alumno")
      {
-      linkGenerado = 'http:\/\/' + req.headers.host + '\/api/confirmation\/' + token;
+      linkGenerado = 'http:\/\/' + req.headers.host + '\/api/alumno/confirmation\/' + token;
      }
      else{
-      linkGenerado='http:\/\/' + req.headers.host + '\/profesor/api/confirmation\/' + token;
+      linkGenerado='http:\/\/' + req.headers.host + '\api/profesor/confirmation\/' + token;
      }
      
     // send mail with defined transport object

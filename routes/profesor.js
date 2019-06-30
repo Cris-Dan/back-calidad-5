@@ -22,7 +22,7 @@ router.get('/logout-profesor', (req, res) => {
     res.json({ respuesta: 'Profesor ha cerrado sesion' });
 });
 
-router.get('/confirmation/:token',async (req,res,next)=>
+router.get('/profesor/confirmation/:token',async (req,res,next)=>
 {
   console.log(req.params.token);
   const userdecode = jwt.decode(req.params.token);
