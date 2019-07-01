@@ -15,4 +15,5 @@ router.get("/v1/cursoFrecuente",logiccontroller.ordenar_curso_por_mas_frecuencia
 router.get("/v1/profesorMasDictados",logiccontroller.ordenar_profesor_por_mas_dictado);
 router.get("/v1/cursosTop",logiccontroller.cursosTop);
 router.post("/v1/inscribirProfesorCurso",logiccontroller.agregarCursoAProfesor);
+router.get("/v1/obtenerMarcos",logiccontroller.obtener_marcos);
 module.exports=router;

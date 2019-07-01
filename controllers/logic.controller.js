@@ -68,6 +68,16 @@ exports.alumno_ordenado_por_sexo_femenino = async(req,res,next)=>
     }
     return res.status(200).send(alumnos);
 }
+exports.obtener_marcos = async (req,res,next)=>
+{
+    const Sanmarcos = await Curso.distinct("marco");
+    
+    if(Sanmarcos.length==0){
+        return res.status(206).send({message:"No hay cursos con marcos"});
+    }
+    console.log(Sanmarcos);
+    return res.status(200).send(Sanmarcos);
+};
 exports.curso_por_marco = async (req,res,next)=>
 {
 
