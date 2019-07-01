@@ -7,13 +7,13 @@ module.exports = {
         try {
             const alumnos = await Alumno.find({});
             if (alumnos != null) {
-                res.send(alumnos);
+                res.status(200).send(alumnos);
             } else {
-                res.send({ message: 'no se encontraron alumnos' });
+                res.status(206).send({ message: 'no se encontraron alumnos' });
             }
 
         } catch (e) {
-            res.send({ message: 'no se encontraron alumnos' });
+            res.status(304).send({ message: 'no se encontraron alumnos' });
         }
     },
     buscarPorEmail: async (req, res) => {
@@ -22,14 +22,14 @@ module.exports = {
         try {
             const existeAlumno = await Alumno.findOne({ email });
             if (existeAlumno != null) {
-                res.send(existeAlumno);
+                res.status(200).send(existeAlumno);
 
             } else {
-                res.send({ message: 'no se encontro al alumno' });
+                res.status(206).send({ message: 'no se encontro al alumno' });
             }
 
         } catch (e) {
-            res.send({ message: 'no se encontro al alumno' });
+            res.status(304).send({ message: 'no se encontro al alumno' });
         }
     },
 
@@ -50,15 +50,15 @@ module.exports = {
                 if (req.body.edad != null) alumno.edad = req.body.edad;
                 if (req.body.genero != null) alumno.genero = req.body.genero;
                 Alumno.findOneAndUpdate({ _id: alumnoExiste._id }, alumno, { new: true }).then((alumno) => {
-                    res.send({ message: 'se actualizo con exito.', alumno });
+                    res.status(200).send({ message: 'se actualizo con exito.', alumno });
                 }).catch((err) => {
                     throw new Error(err);
                 });
             } else {
-                res.send({ message: "No se encontro al alumno" });
+                res.status(206).send({ message: "No se encontro al alumno" });
             }
         } catch (e) {
-            res.send({ message: "No se encontro al alumno" });
+            res.status(304).send({ message: "No se encontro al alumno" });
         }
     },
     //retorna el alumno eliminado
