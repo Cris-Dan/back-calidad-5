@@ -7,6 +7,13 @@ const CursoSchema = new Schema({
     creadeAt:{type:Date,default:Date.now},
     updateAt:Date,
     url_imagen: {type: String },
-    descripcion: {type: String }
+    descripcion: {type: String },
+    temas:{
+        principiante:[String],
+        intermedio:[String],
+        avanzado:[String]
+    },
+    introduccion:String,
+    aprenderas:[String]
 });
 module.exports = model('Curso', CursoSchema);

@@ -25,6 +25,7 @@ const ProfesorSchema = new Schema({
   email: { type: String, required: true },
   genero: { type: String, required: true },
   edad: { type: Number, required: true },
+  gradoAcademico:{type:String},
   ingresado: { type: Date, default: Date.now() },
   isVerified: { type: Boolean, default: false },
   usuario:{type:String,default:'Profesor'}

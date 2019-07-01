@@ -50,6 +50,7 @@ exports.actualizarProfesor = async (req, res, next) => {
             profesor.email = req.body.email;
             profesor.edad = req.body.edad;
             profesor.genero = req.body.genero;
+            profesor.gradoAcademico = req.body.grado;
             Profesor.findOneAndUpdate({ _id: profesorExiste._id }, profesor, { new: true }).then((profesor) => {
                 res.status(200).send({ message: 'se actualizo con exito.', profesor });
             }).catch((err) => {
