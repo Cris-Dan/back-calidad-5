@@ -156,13 +156,13 @@ exports.agregarCursoAProfesor =  async (req,res,next)=>
 };
 exports.buscar_profesor_por_curso = async (req,res,next)=>
 {
-    const {nombreCurso} = req.body;
-    const curso =await Curso.find({curso:nombreCurso});
+    const {nombre} = req.params;
+    const profesores =await Profesor.find({curso:nombre});
     
-    if(!curso)
+    if(profesores.length==0)
     {
         return res.status(206).send({message:"No hay profesores inscritos en el curso"});
     }else{
-        return res.status(200).send(curso);
+        return res.status(200).send(profesores);
     }
 }

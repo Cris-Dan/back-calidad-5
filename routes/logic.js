@@ -16,4 +16,5 @@ router.get("/v1/profesorMasDictados",logiccontroller.ordenar_profesor_por_mas_di
 router.get("/v1/cursosTop",logiccontroller.cursosTop);
 router.post("/v1/inscribirProfesorCurso",logiccontroller.agregarCursoAProfesor);
 router.get("/v1/obtenerMarcos",logiccontroller.obtener_marcos);
+router.get("/v1/obtenerProfesorCurso/:nombre",logiccontroller.buscar_profesor_por_curso);
 module.exports=router;
