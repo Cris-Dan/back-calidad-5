@@ -45,12 +45,12 @@ exports.actualizarProfesor = async (req, res, next) => {
             if (req.body.password != null && !profesorExiste.comparePassword(req.body.password, profesorExiste.password)) {
                 profesor.password = await profesor.encryptPassword(req.body.password);
             }
-            profesor.firstname = req.body.firstname;
-            profesor.lastname = req.body.lastname;
-            profesor.email = req.body.email;
-            profesor.edad = req.body.edad;
-            profesor.genero = req.body.genero;
-            profesor.gradoAcademico = req.body.grado;
+            if(req.body.firstname) profesor.firstname = req.body.firstname;
+            if(req.body.lastname) profesor.lastname = req.body.lastname;
+            if(req.body.email) profesor.email = req.body.email;
+            if(req.body.edad) profesor.edad = req.body.edad;
+            if(req.body.genero) profesor.genero = req.body.genero;
+            if(req.body.grado) profesor.gradoAcademico = req.body.grado;
             Profesor.findOneAndUpdate({ _id: profesorExiste._id }, profesor, { new: true }).then((profesor) => {
                 res.status(200).send({ message: 'se actualizo con exito.', profesor });
             }).catch((err) => {
