@@ -55,7 +55,7 @@ router.get('/profesor/buscarTodo',controller.buscarTodos);
 router.get('/profesor/buscar/:email',controller.buscarProfesor);
 router.put('/profesor/actualizar/:id',controller.actualizarProfesor);
 router.delete('/profesor/eliminar/:email',controller.eliminarProfesor);
-router.get('/profesor/adjuntarCurso',controller.adjuntarCurso);
+router.post('/profesor/adjuntarCurso',controller.adjuntarCurso);
 router.get('/profesor/quitarCurso',controller.quitarCurso);
 router.get('/profesor/buscarTodosCursosProfesor',controller.buscarTodosCursosProfesor);
 router.get('/profesor/buscarProfesoresPorCurso/:idCurso',controller.buscarProfesoresPorCurso);
