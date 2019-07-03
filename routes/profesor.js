@@ -47,10 +47,10 @@ router.get('/errorLogin',(req,res,next)=>
 {
     res.status(201).send({message:'Malos credenciales'});
 });
-router.get('/profesor/verEstadoSolicitud',controller.verEstadoSolicitud);
-router.get('/profesor/aceptarSolicitud',controller.aceptarSolicitud);
-router.get('/profesor/denegarSolicitud',controller.denegarSolicitud);
-router.get('/profesor/solicitar',controller.solicitarProfesor);
+router.post('/profesor/verEstadoSolicitud',controller.verEstadoSolicitud);
+router.post('/profesor/aceptarSolicitud',controller.aceptarSolicitud);
+router.post('/profesor/denegarSolicitud',controller.denegarSolicitud);
+router.post('/profesor/solicitar',controller.solicitarProfesor);
 router.get('/profesor/buscarTodo',controller.buscarTodos);
 router.get('/profesor/buscar/:email',controller.buscarProfesor);
 router.put('/profesor/actualizar/:id',controller.actualizarProfesor);
