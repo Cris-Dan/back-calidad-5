@@ -168,7 +168,7 @@ exports.buscarCursosPorProfesor = async (req, res) => {
     }
 }
 exports.buscarProfesoresPorCurso = async (req, res) => {
-    const ppc = await CursoProfesor.find({ idCurso: req.body.idCurso });
+    const ppc = await CursoProfesor.find({ idCurso: req.params.idCurso });
     if (ppc) {
         return res.status(200).send(ppc);
     } else {

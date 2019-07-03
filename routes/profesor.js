@@ -58,6 +58,6 @@ router.delete('/profesor/eliminar/:email',controller.eliminarProfesor);
 router.get('/profesor/adjuntarCurso',controller.adjuntarCurso);
 router.get('/profesor/quitarCurso',controller.quitarCurso);
 router.get('/profesor/buscarTodosCursosProfesor',controller.buscarTodosCursosProfesor);
-router.get('/profesor/buscarProfesoresPorCurso',controller.buscarProfesoresPorCurso);
+router.get('/profesor/buscarProfesoresPorCurso/:idCurso',controller.buscarProfesoresPorCurso);
 router.get('/profesor/buscarCursosPorProfesor',controller.buscarCursosPorProfesor);
 module.exports = router;
