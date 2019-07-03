@@ -41,16 +41,16 @@ exports.actualizarProfesor = async (req, res, next) => {
         const profesorExiste = await Profesor.findOne({ _id: id });
         if (profesorExiste) {
             const profesor = {};
-            if(req.body.username!=null)profesor.username = req.body.username;
+            if (req.body.username != null) profesor.username = req.body.username;
             if (req.body.password != null && !profesorExiste.comparePassword(req.body.password, profesorExiste.password)) {
                 profesor.password = await profesor.encryptPassword(req.body.password);
             }
-            if(req.body.firstname!=null)profesor.firstname = req.body.firstname;
-            if(req.body.lastname!=null) profesor.lastname = req.body.lastname;
-            if(req.body.email!=null)profesor.email=req.body.email
-            if(req.body.edad!=null)profesor.edad = req.body.edad;
-            if(req.body.genero!=null)profesor.genero = req.body.genero;
-            if(req.body.curso!=null)profesor.curso= req.body.curso;
+            if (req.body.firstname != null) profesor.firstname = req.body.firstname;
+            if (req.body.lastname != null) profesor.lastname = req.body.lastname;
+            if (req.body.email != null) profesor.email = req.body.email
+            if (req.body.edad != null) profesor.edad = req.body.edad;
+            if (req.body.genero != null) profesor.genero = req.body.genero;
+            if (req.body.curso != null) profesor.curso = req.body.curso;
             Profesor.findOneAndUpdate({ _id: profesorExiste._id }, profesor, { new: true }).then((profesor) => {
                 return res.status(200).send({ message: 'se actualizo con exito.', profesor });
             }).catch((err) => {
@@ -126,6 +126,7 @@ exports.verEstadoSolicitud = async (req, res) => {
 }
 exports.adjuntarCurso = async (req, res) => {
     const { idProfesor, idCurso } = req.body;
+
     const existe = await CursoProfesor.findOne({ idProfesor: idProfesor, idCurso: idCurso });
     console.log(existe);
     if (existe) {
@@ -134,6 +135,8 @@ exports.adjuntarCurso = async (req, res) => {
     const cursoProfesor = new CursoProfesor();
     cursoProfesor.idProfesor = idProfesor;
     cursoProfesor.idCurso = idCurso;
+    profesor = await Profesor.findOne({ _id: idProfesor });
+    cursoProfesor.nombreProfesor = profesor.firstname + " " + profesor.lastname;
     await cursoProfesor.save();
     return res.status(200).send({ message: 'OK' });
 
@@ -147,7 +150,6 @@ exports.quitarCurso = async (req, res) => {
     } else {
         return res.status(400).send({ message: "quien sabe que salio mal" });
     }
-
 }
 exports.buscarTodosCursosProfesor = async (req, res) => {
     CursoProfesor.find()
