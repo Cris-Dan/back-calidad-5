@@ -41,7 +41,7 @@ exports.actualizarProfesor = async (req, res, next) => {
         const profesorExiste = await Profesor.findOne({ _id: id });
         if (profesorExiste) {
             const profesor = {};
-            profesor.username = req.body.username;
+            if(req.body.username!=null)profesor.username = req.body.username;
             if (req.body.password != null && !profesorExiste.comparePassword(req.body.password, profesorExiste.password)) {
                 profesor.password = await profesor.encryptPassword(req.body.password);
             }
@@ -52,15 +52,15 @@ exports.actualizarProfesor = async (req, res, next) => {
             if(req.body.genero!=null)profesor.genero = req.body.genero;
             if(req.body.curso!=null)profesor.curso= req.body.curso;
             Profesor.findOneAndUpdate({ _id: profesorExiste._id }, profesor, { new: true }).then((profesor) => {
-                res.status(200).send({ message: 'se actualizo con exito.', profesor });
+                return res.status(200).send({ message: 'se actualizo con exito.', profesor });
             }).catch((err) => {
                 throw new Error(err);
             });
         } else {
-            res.status(400).send({ message: "No se encontro al profesor" });
+            return res.status(400).send({ message: "No se encontro al profesor" });
         }
     } catch (e) {
-        res.status(401).send({ message: "No se encontro al profesor" });
+        return res.status(401).send({ message: "No se encontro al profesor" });
     }
 }
 
