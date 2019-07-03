@@ -1,6 +1,7 @@
 const Profesor = require('../models/Profesor');
 const CursoProfesor = require('../models/CursoProfesor');
-
+const Alumno = require('../models/Alumno');
+const nodemailer = require('nodemailer');
 exports.buscarProfesor = async (req, res, next) => {
     const { email } = req.params;
     const profesor = await Profesor.findOne({ email });
@@ -68,10 +69,29 @@ exports.solicitarProfesor = async (req, res) => {
 
     const { idALumno, idProfesor } = req.body;
     const profesor = await Profesor.findOne({ _id: idProfesor });
+    const alumno = await Alumno.find({ _id: idAlumno });
     if (profesor) {
         var solicitud = { alumno: idALumno };
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.EMAILPASSWORD
+            }
+        });
+
+        const cadena = "Hay una solicitud de dictado de clases para el alumno " + alumno.firstname + " " + alumno.lastname;
+
+        const info = await transporter.sendMail({
+            from: process.env.EMAIL, // sender address
+            to: profesor.email, // list of receivers
+            subject: "Solicitud de clase - FastteachCorp ✔", // Subject line
+            html: cadena // html body
+        });
+
         profesor.solicitudes.push(solicitud);
         await profesor.save();
+        console.log('Message sent : %s', info.messageId);
         res.status(200).send({ message: 'OK' });
     } else {
         res.status(400).send({ message: 'no existe el profesor.' });
@@ -94,6 +114,7 @@ exports.aceptarSolicitud = async (req, res) => {
     const { idAlumno, idProfesor } = req.body;
     var solicitud = { alumno: idAlumno, aceptado: false }
     const profesor = await Profesor.findOne({ _id: idProfesor });
+    const alumno = await Alumno.find({ _id: idAlumno });
     if (profesor) {
         profesor.solicitudes.find((solicitud) => {
             if (solicitud.idALumno == idAlumno) {
@@ -102,7 +123,21 @@ exports.aceptarSolicitud = async (req, res) => {
         });
         profesor.vecesDictado = profesor.vecesDictado + 1;
         await profesor.save();
-        res.status(200).send({ message: 'OK' });
+        const cadena = "El profesor " +profesor.firstname + " " + profesor.lastname + " acepto su solicitud";
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.EMAILPASSWORD
+            }
+        });
+        const info = await transporter.sendMail({
+            from: process.env.EMAIL, // sender address
+            to: alumno.email, // list of receivers
+            subject: "FastteachCorp ✔", // Subject line
+            html:  cadena// html body
+        });
+        return res.status(200).send({ message: 'OK' });
     } else {
         res.status(400).send({ message: 'no existe el profesor.' });
     }
