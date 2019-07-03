@@ -6,12 +6,6 @@ const ProfesorSchema = new Schema({
   password: { type: String, required: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  cursos:
-    [{
-      curso:{
-        type: Schema.Types.ObjectId,
-        ref: 'Curso'}
-    }],
   solicitudes:
     [{
       alumno: {
@@ -25,6 +19,7 @@ const ProfesorSchema = new Schema({
   email: { type: String, required: true },
   genero: { type: String, required: true },
   edad: { type: Number, required: true },
+  curso:{type:String},
   gradoAcademico:{type:String},
   ingresado: { type: Date, default: Date.now() },
   isVerified: { type: Boolean, default: false },
