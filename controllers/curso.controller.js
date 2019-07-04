@@ -21,12 +21,12 @@ exports.actualizarCurso = async (req, res) => {
 
     const { nombre } = req.params;
 
-    if (!req.body.nombre || !req.body.marco)
+    if (!req.body.marco)
         return res.status(401).send({ message: 'Error de validacion' });
 
     const curso = {};
-    curso.nombre = req.body.nombre;
-    curso.marco = req.body.marco;
+    if(req.body.marco!=null)curso.marco = req.body.marco;
+    if (req.body.nombre!=null) curso.nombre=req.body.nombre;
     if (req.body.url_imagen != null) curso.url_imagen = req.body.url_imagen;
     if (req.body.descripcion != null) curso.descripcion = req.body.descripcion;
     //if(req.body.veces_solicitado != null) curso.veces_solicitado=req.body.veces_solicitado;
