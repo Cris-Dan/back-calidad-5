@@ -16,7 +16,7 @@ module.exports= async function enviar_email(mensaje,tipo,data){
         console.log(mensaje);
         const info = await transporter.sendMail({
             from: process.env.EMAIL, 
-            to: data[0].email, 
+            to: data.email, 
             subject: "✔ FastteachCorp ✔", 
             html: "<h1>"+ tipo + " </h1><br><h4>"+mensaje+"</h4>" // html body
         });

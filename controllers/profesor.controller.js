@@ -73,7 +73,7 @@ exports.solicitarProfesor = async (req, res) => {
     const { idAlumno, idProfesor } = req.body;
     const profesor = await Profesor.findOne({ _id: idProfesor });
     
-    const alumno = await Alumno.find({ _id: idAlumno });
+    const alumno = await Alumno.findOne({ _id: idAlumno });
     
     console.log(alumno);
     console.log(profesor);
@@ -108,7 +108,7 @@ exports.aceptarSolicitud = async (req, res) => {
     const { idAlumno, idProfesor } = req.body;
     var solicitud = { alumno: idAlumno, aceptado: false }
     const profesor = await Profesor.findOne({ _id: idProfesor });
-    const alumno = await Alumno.find({ _id: idAlumno });
+    const alumno = await Alumno.findOne({ _id: idAlumno });
     if (profesor) {
         profesor.solicitudes.find((solicitud) => {
             console.log(solicitud);
