@@ -19,6 +19,9 @@ const ProfesorSchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'Alumno'
             },
+            emailAlumno:String,
+            firstnameAlumno:String,
+            lastnameAlumno:String,
             aceptado: { type: Boolean, default: false }
         }],
     vecesDictado: { type: Number, default: 0 },

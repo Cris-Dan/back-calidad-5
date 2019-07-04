@@ -78,7 +78,10 @@ exports.solicitarProfesor = async (req, res) => {
     console.log(alumno);
     console.log(profesor);
     if (profesor) {    
-        var solicitud = { alumno: idAlumno };
+        var solicitud = { alumno: idAlumno,
+            firstnameAlumno:alumno.firstname,
+            lastnameAlumno:alumno.lastname,
+            emailAlumno:alumno.email };
         profesor.solicitudes.push(solicitud);
 
         await profesor.save(); 
