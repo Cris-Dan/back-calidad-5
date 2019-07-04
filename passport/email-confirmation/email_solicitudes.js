@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 module.exports= async function enviar_email(mensaje,tipo,data){
         
         console.log(data);
-        console.log("El email es : "  + data[0].email);
+        console.log("El email es : " + data.email);
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
