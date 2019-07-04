@@ -16,6 +16,15 @@ module.exports = {
             res.status(304).send({ message: 'no se encontraron alumnos' });
         }
     },
+    buscarPorCodigo: async(req,res) => {
+        
+        const alumno = await Alumno.findOne({_id:req.params.idAlumno});
+        if(!alumno)
+            return res.status(206).send({message:"GAAAAAAAAA"});
+        else
+            return res.status(200).send(alumno);
+
+    },
     buscarPorEmail: async (req, res) => {
         const { email } = req.params;
         console.log(email);

@@ -95,9 +95,9 @@ router.get('/errorFacebook',(req,res)=>
     res.status(205).send({message:'Tu cuenta cayó gaaaaa'});
     next();
 });
-
 router.get('/alumno/obtenerAlumnos',alumnoController.buscarTodo);
 router.get('/alumno/:email',alumnoController.buscarPorEmail);
+router.get('/alumno/buscarCodigo/:idAlumno',alumnoController.buscarPorCodigo);
 router.put('/alumno/actualizar/:id',alumnoController.actualizar);
 router.delete('/alumno/eliminar/:id',alumnoController.eliminar);
 
