@@ -103,6 +103,7 @@ exports.denegarSolicitud = async (req, res) => {
         var index = profesor.solicitudes.indexOf(solicitud);
         profesor.solicitudes.splice(index, 1);
         await profesor.save();
+
         var mensaje ="El alumno " +alumno.firstname + " "+alumno.lastname+ " ha cancelado la clase.";
         var tipo ="Cancelar Solicitud";
         await email_solicitudes(mensaje,tipo,profesor);
@@ -142,7 +143,7 @@ exports.aceptarSolicitud = async (req, res) => {
 exports.verEstadoSolicitud = async (req, res) => {
     const { idAlumno, idProfesor } = req.body;
     const profesor = await Profesor.findOne({ _id: idProfesor });
-    if (profesor) {
+    if (profesor) { 
         const sol = profesor.solicitudes.find((solicitud) => {
             return solicitud.alumno == idAlumno;
         })
