@@ -95,13 +95,22 @@ exports.denegarSolicitud = async (req, res) => {
     const { idAlumno, idProfesor } = req.body;
     var solicitud = { alumno: idAlumno, aceptado: false }
     const profesor = await Profesor.findOne({ _id: idProfesor });
+    const alumno = await Alumno.findOne({_id:idAlumno});
     if (profesor) {
         var index = profesor.solicitudes.indexOf(solicitud);
         profesor.solicitudes.splice(index, 1);
         await profesor.save();
+        var mensaje ="El alumno " +alumno.firstname + " "+alumno.lastname+ " ha cancelado la clase.";
+        var tipo ="Cancelar Solicitud";
+        await email_solicitudes(mensaje,tipo,profesor);
+        var mensaje="La cita con el profesor " +profesor.firstname + " " + profesor.lastname+ " ha sido cancelada.";
+        await email_solicitudes(mensaje,tipo,alumno)
         res.status(200).send({ message: 'OK' });
     } else {
-        res.status(400).send({ message: 'no existe el profesor.' });
+        var tipo = "Cancelar Solicitud";
+        var mensaje = "El profesor solicitado ya no trabajo con nosotros";
+        await email_solicitudes(mensaje,tipo,alumno);
+        res.status(400).send({ message: 'No existe el profesor'});
     }
 }
 exports.aceptarSolicitud = async (req, res) => {
